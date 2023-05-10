@@ -10,7 +10,6 @@ const Intro = ({ setActive }) => {
 					src='./src/assets/main.webp'
 					alt='intro'
 				></img>
-				s
 				<div className='layout'>
 					<div className={styles.intro__inner}>
 						<h1 className={styles.intro__title}>
