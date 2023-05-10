@@ -7,9 +7,10 @@ const Intro = ({ setActive }) => {
 			<div className={styles.intro__wrap}>
 				<img
 					className={styles.intro__img}
-					src='./assets/main.webp'
+					src='/src/assets/main.webp'
 					alt='intro'
 				></img>
+				s
 				<div className='layout'>
 					<div className={styles.intro__inner}>
 						<h1 className={styles.intro__title}>
