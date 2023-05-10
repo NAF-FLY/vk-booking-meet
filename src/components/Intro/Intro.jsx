@@ -1,7 +1,7 @@
-import FormBook from '../FormBook/FormBook'
+import MyForm from '../MyForm/MyForm'
 import styles from './Intro.module.css'
 
-const Intro = () => {
+const Intro = ({ setActive }) => {
 	return (
 		<div className={styles.intro}>
 			<div className={styles.intro__wrap}>
@@ -16,7 +16,7 @@ const Intro = () => {
 							Забронируйте переговорные комнаты, конференц-залы и&nbsp; кабинеты
 						</h1>
 						<div className={styles.form__wrapper}>
-							<FormBook />
+							<MyForm setActive={setActive} />
 						</div>
 					</div>
 				</div>
