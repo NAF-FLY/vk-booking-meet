@@ -1,175 +1,117 @@
-import Select from 'react-select'
-import DatePicker from 'react-datepicker'
-import { useCallback, useRef, useState } from 'react'
-import { Formik, Form } from 'formik'
-import { FaCalendarAlt } from 'react-icons/fa'
+import { Form, Formik } from "formik";
+import { FaCalendarAlt } from "react-icons/fa";
+import Select from "react-select";
+import ReactDatePicker from "react-datepicker";
 
-import customStyles from '../../utils/customStyles'
 import {
-	floorOptions,
-	lastDayOfYear,
-	roomOptions,
-	timeOptions,
-	towerOptions,
-} from '../../utils/constants'
+  floorOptions,
+  lastDayOfYear,
+  timeOptions,
+  towerOptions,
+  roomOptions,
+} from "../../utils/constants";
 
-import 'react-datepicker/dist/react-datepicker.css'
-import styles from './Form.module.css'
+import "react-datepicker/dist/react-datepicker.css";
+import customStyles from "../../utils/customStyles";
+import styles from "./Form.module.css";
 
 const FormBook = () => {
-	const [bookingData, setBookingData] = useState({
-		tower: '',
-		floor: '',
-		room: '',
-		date: '',
-		time: '',
-		comment: '',
-	})
+  return (
+    <Formik
+      initialValues={{
+        tower: "",
+        floor: "",
+        room: "",
+        date: "",
+        time: "",
+        comment: "",
+      }}
+      onSubmit={async (values, { setSubmitting }) => {
+        setTimeout(() => {
+					console.log(JSON.stringify(values, null, 2));
+          alert(JSON.stringify(values, null, 2));
+          setSubmitting(false);
+        }, 400);
+      }}
+    >
+      {({ values, setFieldValue, resetForm }) => (
+        <Form className={styles.form}>
+          <div className={styles.inputs__wrapper}>
+            <Select
+              options={towerOptions}
+              styles={customStyles}
+              value={values.tower}
+              onChange={value => setFieldValue("tower", value)}
+              placeholder='Выбор башни'
+              required
+            />
+            <Select
+              options={floorOptions}
+              styles={customStyles}
+              value={values.floor}
+              onChange={value => setFieldValue("floor", value)}
+              placeholder='Выбор этажа'
+              required
+            />
+            <Select
+              options={roomOptions}
+              styles={customStyles}
+              value={values.room}
+              onChange={value => setFieldValue("room", value)}
+              placeholder='Выбор кабинета'
+              required
+            />
+            <div className={styles.booking__container}>
+              <ReactDatePicker
+                className={styles.booking__input}
+                type='date'
+                selected={values.date}
+                onChange={value => setFieldValue("date", value)}
+                dateFormat='dd.MM.yyyy'
+                minDate={new Date()}
+                maxDate={lastDayOfYear}
+                placeholderText='ДД.ММ.ГГГГ'
+                required
+              />
+              <div className={styles["booking__icon-container"]}>
+                <div className={styles["booking__icon-container"]}>
+                  <FaCalendarAlt className={styles.booking__icon} />
+                </div>
+              </div>
+            </div>
+            <Select
+              value={values.time}
+              options={timeOptions}
+              onChange={value => setFieldValue("time", value)}
+              styles={customStyles}
+              placeholder='с 09:00 до 19:30'
+              required
+            />
+          </div>
+          <textarea
+            className={styles["booking__comment-input"]}
+            value={values.comment}
+            onChange={value => setFieldValue("comment", value.target.value)}
+            placeholder='Вы так же можете оставить комментарий к своей брони'
+            maxLength={200}
+          />
+          <div className={styles.buttons__wrapper}>
+            <button className={styles.booking__button} type='submit'>
+              Отправить
+            </button>
+            <button
+              style={{ background: "transparent", color: "black" }}
+              className={styles.booking__button}
+              type='button'
+              onClick={resetForm}
+            >
+              Очистить
+            </button>
+          </div>
+        </Form>
+      )}
+    </Formik>
+  );
+};
 
-	// устанавливаем значение из выпадающего меню
-	const handleSelectChange = useCallback((selectedOption, actionMeta) => {
-		console.log(actionMeta.name, selectedOption.label)
-		// const { name, value } = actionMeta
-		setBookingData(prevBookingData => ({
-			...prevBookingData,
-			[actionMeta.name]: selectedOption.label,
-		}))
-	}, [])
-
-	// функция для выбора даты
-	const handleDateChange = useCallback(date => {
-		setBookingData(prevBookingData => ({
-			...prevBookingData,
-			date,
-		}))
-	}, [])
-
-	//открыть календарь по клику на иконку календаря
-	const datePickerRef = useRef(null)
-	const handleDateIconClick = useCallback(() => {
-		datePickerRef.current.setFocus()
-	}, [])
-
-	// функция для ввода текста в поле комментария
-	const handleCommentChange = useCallback(event => {
-		const { value } = event.target
-		setBookingData(prevBookingData => ({
-			...prevBookingData,
-			comment: value,
-		}))
-	}, [])
-
-	// отправка данных формы
-	const handleSubmit = useCallback(
-		event => {
-			event.preventDefault()
-			console.log('Booking data:', bookingData)
-			// setShowPopup(true)
-			handleClear()
-		},
-		[bookingData]
-	)
-
-	// очищение всех полей формы
-	const handleClear = useCallback(() => {
-		setBookingData({
-			tower: '',
-			floor: '',
-			room: '',
-			date: '',
-			time: '',
-			comment: '',
-		})
-	}, [])
-
-	return (
-		<form onSubmit={handleSubmit} className={styles.form}>
-			<div className={styles.inputs__wrapper}>
-				<Select
-					id='tower'
-					name='tower'
-					value={bookingData.tower}
-					options={towerOptions}
-					onChange={handleSelectChange}
-					styles={customStyles}
-					placeholder='Башня А или Б'
-					required
-				/>
-				<Select
-					id='floor'
-					name='floor'
-					value={bookingData.floor}
-					options={floorOptions}
-					onChange={handleSelectChange}
-					styles={customStyles}
-					placeholder='Выбор этажа'
-					required
-				/>
-				<Select
-					id='room'
-					name='room'
-					value={bookingData.room}
-					options={roomOptions}
-					onChange={handleSelectChange}
-					styles={customStyles}
-					placeholder='Выбор переговорной'
-					required
-				/>
-
-				<div className={styles.booking__container}>
-					<DatePicker
-						className={styles.booking__input}
-						selected={bookingData.date}
-						onChange={handleDateChange}
-						dateFormat='dd.MM.yyyy'
-						minDate={new Date()}
-						maxDate={lastDayOfYear}
-						showPopperArrow={false}
-						ref={datePickerRef}
-						placeholderText='ДД.ММ.ГГГГ'
-						required
-					/>
-					<div className={styles['booking__icon-container']}>
-						<FaCalendarAlt
-							className={styles.booking__icon}
-							onClick={handleDateIconClick}
-						/>
-					</div>
-				</div>
-				<Select
-					id='time'
-					name='time'
-					value={bookingData.time}
-					options={timeOptions}
-					onChange={handleSelectChange}
-					styles={customStyles}
-					placeholder='с 09:00 до 19:30'
-					required
-				/>
-			</div>
-			<textarea
-				className={styles['booking__comment-input']}
-				id='comment'
-				name='comment'
-				value={bookingData.comment}
-				onChange={handleCommentChange}
-				placeholder='Вы так же можете оставить комментарий к своей брони'
-				maxLength={200}
-			/>
-			<div className={styles.buttons__wrapper}>
-				<button className={styles.booking__button} type='submit'>
-					Отправить
-				</button>
-				<button
-					className={styles.booking__button}
-					type='button'
-					onClick={handleClear}
-				>
-					Очистить
-				</button>
-			</div>
-		</form>
-	)
-}
-
-export default FormBook
+export default FormBook;

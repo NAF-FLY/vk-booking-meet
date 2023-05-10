@@ -1,7 +1,7 @@
 // задать значения для выпадающего меню
 export const towerOptions = [
 	{ value: 'A', label: 'Башня А' },
-	{ value: 'B', label: 'Башня Б' },
+	{ value: 'Б', label: 'Башня Б' },
 ]
 
 export const floorOptions = [...Array(25)].map((_, index) => ({

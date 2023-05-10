@@ -4,7 +4,7 @@ const customStyles = {
 		...provided,
 		height: '30px',
 		fontSize: '14px',
-		minWidth: '146px',
+		minWidth: '167px',
 		maxWidth: '350px',
 		borderRadius: '4px',
 		borderColor: state.hasValue ? '#1f08a5' : '#a9a2a2',
