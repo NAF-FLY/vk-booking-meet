@@ -7,7 +7,7 @@ const Intro = ({ setActive }) => {
 			<div className={styles.intro__wrap}>
 				<img
 					className={styles.intro__img}
-					src='/src/assets/main.webp'
+					src='./src/assets/main.webp'
 					alt='intro'
 				></img>
 				s
