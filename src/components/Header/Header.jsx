@@ -5,7 +5,7 @@ const Header = () => {
 		<header className={`${styles.header}`}>
 			<div className={styles.header__wrap}>
 				<div className={styles.header__logo}>
-					<img src='../../../src/assets/logo.png' alt='logo' />
+					<img src='./src/assets/logo.png' alt='logo' />
 				</div>
 			</div>
 		</header>

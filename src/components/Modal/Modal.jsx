@@ -2,7 +2,7 @@ import { IoMdClose } from 'react-icons/io'
 
 import './modal.css'
 
-const Modal = ({ active, setActive, children }) => {
+const Modal = ({ active, setActive }) => {
 	return (
 		<div
 			className={active ? 'modal active' : 'modal'}
@@ -21,7 +21,7 @@ const Modal = ({ active, setActive, children }) => {
 				</div>
 				<div className='modal__main-content'>
 					<img
-						src='../../../src/assets/success.svg'
+						src='./src/assets/success.svg'
 						alt='success'
 						className='modal__success-icon'
 					/>
